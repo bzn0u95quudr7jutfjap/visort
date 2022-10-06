@@ -9,6 +9,7 @@
 
 using namespace std;
 
+int MS_DELAY = 100;
 SDL_Window * window = nullptr;
 SDL_Renderer * renderer = nullptr;
 vector<TYPE> blocks;
@@ -22,6 +23,9 @@ void swapNonGraphic(vector<TYPE>& v, int i, int j){
 		c = a.y;
 		a.y = b.y;
 		b.y = c;
+}
+int cmpNonGraphic(vector<TYPE>& v, int i, int j){
+	return v[j].h - v[i].h;
 }
 
 void shuffle(vector<TYPE>& v, random_device& rd, uniform_int_distribution<int>& uid){
@@ -37,7 +41,7 @@ void printSDL(){
 	SDL_RenderDrawRects(renderer,blocks.data(),blocks.size());
 	SDL_RenderFillRects(renderer,blocks.data(),blocks.size());
 	SDL_RenderPresent(renderer);
-	SDL_Delay(100);
+	SDL_Delay(MS_DELAY);
 }
 
 void printSDL(int i, int j){
@@ -52,19 +56,28 @@ void printSDL(int i, int j){
 	SDL_SetRenderDrawColor(renderer,0xff,0x0,0x0,255);
 	SDL_RenderFillRect(renderer,&(blocks[j]));
 	SDL_RenderPresent(renderer);
-	SDL_Delay(100);
+	SDL_Delay(MS_DELAY);
 }
 
 int cmp(vector<TYPE>& v, int i, int j){
-	return v[j].h - v[i].h;
+	printSDL(i,j);
+	return cmpNonGraphic(v,i,j);
 }
 
 bool isOrdered(vector<TYPE>& v){
 	bool ordered = 1;
+	SDL_SetRenderDrawColor(renderer,0,255,0,255);
+	SDL_RenderFillRect(renderer,&(blocks[0]));
+	SDL_RenderPresent(renderer);
+	SDL_Delay(MS_DELAY);
 	for(int i = 0; i < v.size()-1; i++){
-		if(cmp(v,i,i+1)<0){
+		if(cmpNonGraphic(v,i,i+1)<0){
 			i = v.size()+1;
 			ordered = 0;
+		}else{
+			SDL_RenderFillRect(renderer,&(blocks[i+1]));
+			SDL_RenderPresent(renderer);
+			SDL_Delay(MS_DELAY);
 		}
 	}
 	return ordered;

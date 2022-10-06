@@ -14,4 +14,5 @@ void inss(vector<TYPE>& v){
 			}
 		}
 	}
+	isOrdered(v);
 }

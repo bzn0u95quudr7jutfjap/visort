@@ -66,6 +66,7 @@ int cmp(vector<TYPE>& v, int i, int j){
 
 bool isOrdered(vector<TYPE>& v){
 	bool ordered = 1;
+	printSDL();
 	SDL_SetRenderDrawColor(renderer,0,255,0,255);
 	SDL_RenderFillRect(renderer,&(blocks[0]));
 	SDL_RenderPresent(renderer);

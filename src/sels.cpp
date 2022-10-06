@@ -17,4 +17,5 @@ void sels(vector<TYPE>& v){
 	for(int i = 0; i < v.size(); i++){
 		swap(v,i,idx_min(v,i,v.size()));
 	}
+	isOrdered(v);
 }

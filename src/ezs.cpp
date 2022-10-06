@@ -10,4 +10,5 @@ void ezs(vector<TYPE>& v){
 			}
 		}
 	}
+	isOrdered(v);
 }

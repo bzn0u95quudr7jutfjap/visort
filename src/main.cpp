@@ -33,7 +33,7 @@ int main(int args, char ** argv){
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
 
-	int numCols = args > 1 ?  atoi(argv[1]) : 12;
+	int numCols = atoi(argv[1]);
 	for(int i = 0 ; i < numCols; i++){
 		TYPE r;
 		r.w=-border + (W/numCols);

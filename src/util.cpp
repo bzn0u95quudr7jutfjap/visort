@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int MS_DELAY = 100;
+int MS_DELAY = 60;
 SDL_Window * window = nullptr;
 SDL_Renderer * renderer = nullptr;
 vector<TYPE> blocks;

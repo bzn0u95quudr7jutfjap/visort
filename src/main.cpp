@@ -9,13 +9,14 @@
 using namespace std;
 
 #include "util.hpp"
-#include "qcs.hpp"
-#include "cts.hpp"
-#include "ezs.hpp"
-#include "bbs.hpp"
-#include "bgo.hpp"
-#include "sels.hpp"
-#include "inss.hpp"
+
+void qcs(vector<TYPE>& v);
+void cts(vector<TYPE>& v);
+void ezs(vector<TYPE>& v);
+void bbs(vector<TYPE>& v);
+void bgo(vector<TYPE>& v);
+void sels(vector<TYPE>& v);
+void inss(vector<TYPE>& v);
 
 extern SDL_Window * window;
 extern SDL_Renderer * renderer;

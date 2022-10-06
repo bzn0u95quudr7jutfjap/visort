@@ -16,7 +16,7 @@ $(BIN):$(OBJS)
 .PHONY: build run clean
 
 clean:
-	rm -fr $(OBJ) $(BIN)
+	rm -fr $(OBJD)/* $(BIN)
 
 build:$(BIN)
 

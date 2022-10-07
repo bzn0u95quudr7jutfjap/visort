@@ -14,9 +14,13 @@ SDL_Window * window = nullptr;
 SDL_Renderer * renderer = nullptr;
 vector<TYPE> blocks;
 
-void swapNonGraphic(vector<TYPE>& v, int i, int j){
-		TYPE& a = v[i];
-		TYPE& b = v[j];
+void shuffle(vector<TYPE>& v, random_device& rd, uniform_int_distribution<int>& uid){
+	for(int i = 0; i < v.size(); i++){
+		swapNonGraphic(v,i,uid(rd));
+	}
+}
+
+void swapNonGraphic(TYPE& a, TYPE& b){
 		int c = a.h;
 		a.h = b.h;
 		b.h = c;
@@ -24,12 +28,17 @@ void swapNonGraphic(vector<TYPE>& v, int i, int j){
 		a.y = b.y;
 		b.y = c;
 }
+void swapNonGraphic(vector<TYPE>& v, int i, int j){
+		swapNonGraphic(v[i],v[j]);
+}
 
-
-void shuffle(vector<TYPE>& v, random_device& rd, uniform_int_distribution<int>& uid){
-	for(int i = 0; i < v.size(); i++){
-		swapNonGraphic(v,i,uid(rd));
-	}
+void swap(vector<TYPE>& v, int i, int j){
+	swapNonGraphic(v,i,j);
+	printSDL(i,j);
+}
+void swap(TYPE& a, TYPE& b, int i, int j){
+	swapNonGraphic(a,b);
+	printSDL(i,j);
 }
 
 void printSDL(){
@@ -87,9 +96,4 @@ bool isOrdered(vector<TYPE>& v){
 		}
 	}
 	return ordered;
-}
-
-void swap(vector<TYPE>& v, int i, int j){
-	swapNonGraphic(v,i,j);
-	printSDL(i,j);
 }

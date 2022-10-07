@@ -19,3 +19,4 @@ int cmp(TYPE&, TYPE&, int, int);
 bool isOrdered(vector<TYPE>& v);
 void swapNonGraphic(vector<TYPE>& v, int i, int j);
 void swap(vector<TYPE>& v, int i, int j);
+void swap(TYPE&, TYPE&, int, int);

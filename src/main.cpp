@@ -4,6 +4,7 @@
 #include <numeric>
 #include <random>
 #include <cstring>
+#include <csignal>
 #include <SDL2/SDL.h>
 
 using namespace std;
@@ -17,6 +18,7 @@ void bbs(vector<TYPE>& v);
 void bgo(vector<TYPE>& v);
 void sels(vector<TYPE>& v);
 void inss(vector<TYPE>& v);
+void mergesort(vector<TYPE>& v);
 
 extern SDL_Window * window;
 extern SDL_Renderer * renderer;
@@ -24,7 +26,13 @@ extern vector<TYPE> blocks;
 
 const int border = 4;
 
+void die(int signal){
+	exit(1);
+}
+
 int main(int args, char ** argv){
+
+	signal(SIGINT,die);
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
@@ -56,6 +64,7 @@ int main(int args, char ** argv){
 		}else if(strcmp(argv[i],"inss")==0){	inss(blocks);
 		}else if(strcmp(argv[i],"qcs")==0){		qcs(blocks);
 		}else if(strcmp(argv[i],"bgo")==0){		bgo(blocks);
+		}else if(strcmp(argv[i],"merge")==0){		mergesort(blocks);
 		}
 	}
 

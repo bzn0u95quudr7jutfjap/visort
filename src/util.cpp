@@ -24,9 +24,7 @@ void swapNonGraphic(vector<TYPE>& v, int i, int j){
 		a.y = b.y;
 		b.y = c;
 }
-int cmpNonGraphic(vector<TYPE>& v, int i, int j){
-	return v[j].h - v[i].h;
-}
+
 
 void shuffle(vector<TYPE>& v, random_device& rd, uniform_int_distribution<int>& uid){
 	for(int i = 0; i < v.size(); i++){
@@ -59,9 +57,16 @@ void printSDL(int i, int j){
 	SDL_Delay(MS_DELAY);
 }
 
+int cmpNonGraphic(vector<TYPE>& v, int i, int j){
+	return v[j].h - v[i].h;
+}
 int cmp(vector<TYPE>& v, int i, int j){
 	printSDL(i,j);
 	return cmpNonGraphic(v,i,j);
+}
+int cmp(TYPE& i, TYPE& j, int ii, int jj){
+	printSDL(ii,jj);
+	return j.h - i.h;
 }
 
 bool isOrdered(vector<TYPE>& v){

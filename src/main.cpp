@@ -29,27 +29,32 @@ int main(int args, char ** argv){
 
 	signal(SIGINT,[](int sig){ exit(1);});
 
-	const int W = 640, H = 480;
-	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
-	SDL_SetRenderDrawColor(renderer,0,0,0,255);
-	SDL_RenderClear(renderer);
-	SDL_RenderPresent(renderer);
-
-	int numCols = atoi(argv[1]);
-	const int border = 4;
-	for(int i = 0 ; i < numCols; i++){
-		TYPE r;
-		r.w=-border + (W/numCols);
-		r.h=-border + (H/numCols)*(i+1);
-		r.x=(border/2) + (W/numCols)*i;
-		r.y=-(border/2) + (H-r.h);
-		blocks.push_back(r);
+	int W = 640, H = 480;
+	const int numCols = atoi(argv[1]);
+	{
+		const int border = 4;
+		const int blockWidth = (W -(border*numCols)) /numCols;
+		const int blockHeight = (H -(border*2)) /numCols;
+		int lastX = 0;
+		for(int i = 0 ; i < numCols; i++){
+			TYPE r;
+			r.w=blockWidth;
+			r.h=blockHeight*(i+1);
+			r.y=H -border -r.h;
+			r.x=border*(i+1) +blockWidth*i;
+			blocks.push_back(r);
+		}
+		W = (blockWidth+border)*numCols+border;
 	}
 
 	random_device rd;
     uniform_int_distribution<int> dist(0,numCols-1);
 
+	SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
+	SDL_SetRenderDrawColor(renderer,0,0,0,255);
+	SDL_RenderClear(renderer);
+	SDL_RenderPresent(renderer);
 	printSDL();
 	for(int i = 2; i < args; i++){
 		shuffle(blocks,rd,dist);

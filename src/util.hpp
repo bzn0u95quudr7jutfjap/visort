@@ -15,8 +15,6 @@ const int H = 480;
 void shuffle(vector<TYPE>& v, random_device&, uniform_int_distribution<int>&);
 void printSDL();
 int cmp(vector<TYPE>&v, int i, int j);
-int cmp(TYPE&, TYPE&, int, int);
 bool isOrdered(vector<TYPE>& v);
 void swapNonGraphic(vector<TYPE>& v, int i, int j);
 void swap(vector<TYPE>& v, int i, int j);
-void swap(TYPE&, TYPE&, int, int);

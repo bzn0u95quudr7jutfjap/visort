@@ -20,27 +20,6 @@ void shuffle(vector<TYPE>& v, random_device& rd, uniform_int_distribution<int>& 
 	}
 }
 
-void swapNonGraphic(TYPE& a, TYPE& b){
-		int c = a.h;
-		a.h = b.h;
-		b.h = c;
-		c = a.y;
-		a.y = b.y;
-		b.y = c;
-}
-void swapNonGraphic(vector<TYPE>& v, int i, int j){
-		swapNonGraphic(v[i],v[j]);
-}
-
-void swap(vector<TYPE>& v, int i, int j){
-	swapNonGraphic(v,i,j);
-	printSDL(i,j);
-}
-void swap(TYPE& a, TYPE& b, int i, int j){
-	swapNonGraphic(a,b);
-	printSDL(i,j);
-}
-
 void printSDL(){
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);
 	SDL_RenderClear(renderer);
@@ -66,16 +45,27 @@ void printSDL(int i, int j){
 	SDL_Delay(MS_DELAY);
 }
 
+void swapNonGraphic(vector<TYPE>& v, int i, int j){
+		TYPE& a = v[i];
+		TYPE& b = v[j];
+		int c = a.h;
+		a.h = b.h;
+		b.h = c;
+		c = a.y;
+		a.y = b.y;
+		b.y = c;
+}
+
+void swap(vector<TYPE>& v, int i, int j){
+	swapNonGraphic(v,i,j);
+	printSDL(i,j);
+}
 int cmpNonGraphic(vector<TYPE>& v, int i, int j){
 	return v[j].h - v[i].h;
 }
 int cmp(vector<TYPE>& v, int i, int j){
 	printSDL(i,j);
 	return cmpNonGraphic(v,i,j);
-}
-int cmp(TYPE& i, TYPE& j, int ii, int jj){
-	printSDL(ii,jj);
-	return j.h - i.h;
 }
 
 bool isOrdered(vector<TYPE>& v){

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
 #include <numeric>
 #include <random>
 #include <cstring>
@@ -24,15 +25,10 @@ extern SDL_Window * window;
 extern SDL_Renderer * renderer;
 extern vector<TYPE> blocks;
 
-const int border = 4;
-
-void die(int signal){
-	exit(1);
-}
 
 int main(int args, char ** argv){
 
-	signal(SIGINT,die);
+	signal(SIGINT,[](int sig){ exit(1);});
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
@@ -42,6 +38,7 @@ int main(int args, char ** argv){
 	SDL_RenderPresent(renderer);
 
 	int numCols = atoi(argv[1]);
+	const int border = 4;
 	for(int i = 0 ; i < numCols; i++){
 		TYPE r;
 		r.w=-border + (W/numCols);

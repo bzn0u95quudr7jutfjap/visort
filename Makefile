@@ -21,10 +21,13 @@ clean:
 build:$(BIN)
 
 run:build
-	./$(BIN) 08 bbs
-	./$(BIN) 08 cts
-	./$(BIN) 08 ezs
-	./$(BIN) 08 inss
-	./$(BIN) 08 sels
-	./$(BIN) 08 qcs
-	./$(BIN) 08 merge
+	./$(BIN) 16 bbs
+	./$(BIN) 16 cts
+	./$(BIN) 16 ezs
+	./$(BIN) 16 inss
+	./$(BIN) 16 sels
+	./$(BIN) 64 qcs
+	./$(BIN) 64 merge
+
+test:build
+	./$(BIN) 08 bbs cts ezs inss sels qcs merge

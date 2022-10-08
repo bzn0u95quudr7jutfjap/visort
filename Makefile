@@ -26,4 +26,5 @@ run:build
 	./$(BIN) 20 ezs
 	./$(BIN) 20 inss
 	./$(BIN) 20 sels
-	./$(BIN) 20 qcs
+	./$(BIN) 80 qcs
+	./$(BIN) 80 merge

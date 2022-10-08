@@ -9,8 +9,6 @@ using std::random_device;
 using std::uniform_int_distribution;
 
 typedef SDL_Rect TYPE;
-const int W = 640;
-const int H = 480;
 
 void shuffle(vector<TYPE>& v, random_device&, uniform_int_distribution<int>&);
 void printSDL();

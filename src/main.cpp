@@ -25,14 +25,13 @@ extern SDL_Window * window;
 extern SDL_Renderer * renderer;
 extern vector<TYPE> blocks;
 
-
 int main(int args, char ** argv){
 
 	signal(SIGINT,[](int sig){ exit(1);});
 
+	const int W = 640, H = 480;
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
-	//SDL_RenderSetScale(renderer,2,2);
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);

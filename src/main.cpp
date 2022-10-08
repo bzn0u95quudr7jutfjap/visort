@@ -35,7 +35,7 @@ int main(int args, char ** argv){
 		const int border = 4;
 		const int blockWidth = (W -(border*numCols)) /numCols;
 		const int blockHeight = (H -(border*2)) /numCols;
-		int lastX = 0;
+		H = blockHeight*numCols + border*2;
 		for(int i = 0 ; i < numCols; i++){
 			TYPE r;
 			r.w=blockWidth;

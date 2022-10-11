@@ -12,7 +12,7 @@ void mergerec(vector<TYPE>& v, int l, int h){
 		for(int i = l, j=m+1; i<j && j<=h;){
 			if(cmp(v,i,j)<0){
 				for(int z=j; z>i; z--){
-					swapNonGraphic(v,z,z-1);
+					swap(v,z,z-1);
 				}
 				j++;
 			}

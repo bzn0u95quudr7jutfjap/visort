@@ -14,6 +14,8 @@ SDL_Window * window = nullptr;
 SDL_Renderer * renderer = nullptr;
 vector<TYPE> blocks;
 
+void swapNonGraphic(vector<TYPE>& v, int i, int j);
+
 void shuffle(vector<TYPE>& v, random_device& rd, uniform_int_distribution<int>& uid){
 	for(int i = 0; i < v.size(); i++){
 		swapNonGraphic(v,i,uid(rd));

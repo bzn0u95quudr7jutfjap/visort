@@ -7,6 +7,9 @@ SRCS=$(wildcard $(SRCD)/*.cpp)
 OBJS=$(patsubst $(SRCD)/%.cpp, $(OBJD)/%.o, $(SRCS))
 BIN=sorting
 
+$(OBJD):
+	mkdir -p $@
+
 $(OBJD)/%.o:$(SRCD)/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
@@ -16,9 +19,9 @@ $(BIN):$(OBJS)
 .PHONY: build run clean
 
 clean:
-	rm -fr $(OBJD)/* $(BIN)
+	rm -fr $(OBJS) $(BIN)
 
-build:$(BIN)
+build:$(OBJD) $(BIN)
 
 run:build
 	./$(BIN) 16 bbs

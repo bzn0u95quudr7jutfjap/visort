@@ -13,6 +13,7 @@ typedef SDL_Rect TYPE;
 void shuffle(vector<TYPE>& v, random_device&, uniform_int_distribution<int>&);
 void printSDL();
 int cmp(vector<TYPE>&v, int i, int j);
+//int cmpNonGraphic(vector<TYPE>&v, int i, int j);
 bool isOrdered(vector<TYPE>& v);
-void swapNonGraphic(vector<TYPE>& v, int i, int j);
+//void swapNonGraphic(vector<TYPE>& v, int i, int j);
 void swap(vector<TYPE>& v, int i, int j);

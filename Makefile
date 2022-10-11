@@ -24,13 +24,13 @@ clean:
 build:$(OBJD) $(BIN)
 
 run:build
-	./$(BIN) 16 bbs
-	./$(BIN) 16 cts
-	./$(BIN) 16 ezs
-	./$(BIN) 16 inss
-	./$(BIN) 16 sels
-	./$(BIN) 64 qcs
-	./$(BIN) 64 merge
+	./$(BIN) n=8 algo=bbs
+	./$(BIN) n=8 algo=cts
+	./$(BIN) n=8 algo=ezs
+	./$(BIN) n=8 algo=inss
+	./$(BIN) n=8 algo=sels
+	./$(BIN) n=32 algo=qcs
+	./$(BIN) n=32 algo=merge
 
 test:build
 	./$(BIN) 08 bbs cts ezs inss sels qcs merge

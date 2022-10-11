@@ -20,6 +20,8 @@ void bgo(vector<TYPE>& v);
 void sels(vector<TYPE>& v);
 void inss(vector<TYPE>& v);
 void mergesort(vector<TYPE>& v);
+void qcsm(vector<TYPE>& v);
+void insRec(vector<TYPE>& v);
 
 extern SDL_Window * window;
 extern SDL_Renderer * renderer;
@@ -64,10 +66,12 @@ int main(int args, char ** argv){
 		}else if(strcmp(argv[i],"sels")==0){	sels(blocks);
 		}else if(strcmp(argv[i],"inss")==0){	inss(blocks);
 		}else if(strcmp(argv[i],"qcs")==0){		qcs(blocks);
+		}else if(strcmp(argv[i],"qcsm")==0){		qcsm(blocks);
 		}else if(strcmp(argv[i],"bgo")==0){		bgo(blocks);
 		}else if(strcmp(argv[i],"merge")==0){		mergesort(blocks);
+		}else if(strcmp(argv[i],"insr")==0){		insRec(blocks);
 		}
 	}
 
-	SDL_Delay(2000);
+	SDL_Delay(1024 + 512);
 }

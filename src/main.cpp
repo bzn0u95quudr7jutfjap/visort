@@ -41,35 +41,30 @@ int main(int args, char ** argv){
 	signal(SIGINT,[](int sig){ exit(1);});
 
 	int numCols = 12;
+	int border = 4;
 	vector<string> algoToUse;
 	for(int i = 1; i < args; i++){
 		string s(argv[i]);
 		string name = s.substr(0,s.find("="));
 		string value = s.substr(s.find("=")+1);
 
-		printf("%s \n", argv[i]);
 		printf("( %s = %s ) \n",name.c_str(), value.c_str());
 				if(str_equals(name,"n")){ numCols = stoi(value);
 		}else 	if(str_equals(name,"delay")){ MS_DELAY = stoi(value);
+		}else 	if(str_equals(name,"border")){ border = stoi(value);
 		}else 	if(str_equals(name,"algo")){
 			int idx = 0;
 			while(idx > -1){
 				idx = value.find(",");
 				string current = value.substr(0,idx);
-				printf("%s \n",current.c_str());
 				algoToUse.push_back(current);
 				value = value.substr(idx+1);
 			}
-			for(string s : algoToUse){
-				printf("%s ",s.c_str());
-			}
 		}
 	}
-	printf("\n");
 
 	int W = 640, H = 480;
 	{
-		const int border = 4;
 		const int blockWidth = (W -(border*numCols)) /numCols;
 		const int blockHeight = (H -(border*2)) /numCols;
 		H = blockHeight*numCols + border*2;

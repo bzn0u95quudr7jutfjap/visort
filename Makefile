@@ -33,4 +33,4 @@ run:build
 	./$(BIN) n=32 algo=merge
 
 test:build
-	./$(BIN) 08 bbs cts ezs inss sels qcs merge
+	./$(BIN) n=20 algo=merge-iter

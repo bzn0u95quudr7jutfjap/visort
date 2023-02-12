@@ -21,6 +21,7 @@ void bgo(vector<TYPE>& v);
 void sels(vector<TYPE>& v);
 void inss(vector<TYPE>& v);
 void mergesort(vector<TYPE>& v);
+void mergesort_iter(vector<TYPE>& v);
 //void qcsm(vector<TYPE>& v);
 void insRec(vector<TYPE>& v);
 
@@ -49,10 +50,10 @@ int main(int args, char ** argv){
 		string value = s.substr(s.find("=")+1);
 
 		printf("( %s = %s ) \n",name.c_str(), value.c_str());
-				if(str_equals(name,"n")){ numCols = stoi(value);
-		}else 	if(str_equals(name,"delay")){ MS_DELAY = stoi(value);
-		}else 	if(str_equals(name,"border")){ border = stoi(value);
-		}else 	if(str_equals(name,"algo")){
+		if(str_equals(name,"n")){ numCols = stoi(value);
+		}else if(str_equals(name,"delay")){ MS_DELAY = stoi(value);
+		}else if(str_equals(name,"border")){ border = stoi(value);
+		}else if(str_equals(name,"algo")){
 			int idx = 0;
 			while(idx > -1){
 				idx = value.find(",");
@@ -80,25 +81,31 @@ int main(int args, char ** argv){
 	}
 
 	random_device rd;
-    uniform_int_distribution<int> dist(0,numCols-1);
+	uniform_int_distribution<int> dist(0,numCols-1);
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
+	
+	//for(int i=0,j=blocks.size()-1; i < j; i++,j--){ swapNonGraphic(blocks,i,j); }
+
 	printSDL();
 	for(int i = 0; i < algoToUse.size(); i++){
 		shuffle(blocks,rd,dist);
-			  if(str_equals(algoToUse[i],"bbs"  )){	bbs(blocks);
-		}else if(str_equals(algoToUse[i],"cts"  )){	cts(blocks);
-		}else if(str_equals(algoToUse[i],"ezs"  )){	ezs(blocks);
-		}else if(str_equals(algoToUse[i],"sels" )){	sels(blocks);
-		}else if(str_equals(algoToUse[i],"inss" )){	inss(blocks);
-		}else if(str_equals(algoToUse[i],"qcs"  )){	qcs(blocks);
-		}else if(str_equals(algoToUse[i],"bgo"  )){	bgo(blocks);
-		}else if(str_equals(algoToUse[i],"merge")){	mergesort(blocks);
-		}else if(str_equals(algoToUse[i],"insr" )){	insRec(blocks);
+
+
+		if(		str_equals(algoToUse[i],"bbs"  )){		bbs(blocks);
+		}else if(	str_equals(algoToUse[i],"cts"  )){		cts(blocks);
+		}else if(	str_equals(algoToUse[i],"ezs"  )){		ezs(blocks);
+		}else if(	str_equals(algoToUse[i],"sels" )){		sels(blocks);
+		}else if(	str_equals(algoToUse[i],"inss" )){		inss(blocks);
+		}else if(	str_equals(algoToUse[i],"qcs"  )){		qcs(blocks);
+		}else if(	str_equals(algoToUse[i],"bgo"  )){		bgo(blocks);
+		}else if(	str_equals(algoToUse[i],"merge")){		mergesort(blocks);
+		}else if(	str_equals(algoToUse[i],"merge-iter")){		mergesort_iter(blocks);
+		}else if(	str_equals(algoToUse[i],"insr" )){		insRec(blocks);
 		//}else if(strcmp(argv[i],"qcsm")==0){	qcsm(blocks);
 		}
 	}

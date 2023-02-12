@@ -37,32 +37,33 @@ bool str_equals(const string& s1, const string& s2){
 	return s1.compare(s2) == 0;
 }
 
-int main(int args, char ** argv){
+vector<string> str_split(string s, const string& del){
+	vector<string> ris;
+	int idx;
+	while((idx = s.find(del)) != -1){
+		ris.push_back(s.substr(0,idx));
+		s = s.substr(idx+1);
+	}
+	if(s.compare("")!=0){ ris.push_back(s); }
+	return ris;
+}
 
+int main(int argc, char ** argv){
 	signal(SIGINT,[](int sig){ exit(1);});
 
-	int numCols = 12;
-	int border = 4;
-	vector<string> algoToUse;
-	for(int i = 1; i < args; i++){
-		string s(argv[i]);
-		string name = s.substr(0,s.find("="));
-		string value = s.substr(s.find("=")+1);
-
-		printf("( %s = %s ) \n",name.c_str(), value.c_str());
-		if(str_equals(name,"n")){ numCols = stoi(value);
-		}else if(str_equals(name,"delay")){ MS_DELAY = stoi(value);
-		}else if(str_equals(name,"border")){ border = stoi(value);
-		}else if(str_equals(name,"algo")){
-			int idx = 0;
-			while(idx > -1){
-				idx = value.find(",");
-				string current = value.substr(0,idx);
-				algoToUse.push_back(current);
-				value = value.substr(idx+1);
-			}
-		}
+	map<string,string> args;
+	for(int i=1; i < argc; i++){
+		vector<string> arg = str_split(argv[i],"=");
+		args[arg[0]]=arg[1];
 	}
+
+	MS_DELAY =			args.find("delay")	== args.end() ? 60			: stoi(args.at("delay"));
+	int border =			args.find("border")	== args.end() ? 4			: stoi(args.at("border"));
+	int numCols = 			args.find("n")		== args.end() ? 12			: stoi(args.at("n"));
+	vector<string> algoToUse =	args.find("algo")	== args.end() ? vector<string>()	: str_split(args.at("algo"),",");
+
+	for(auto [k,v] : args){ cout << "( " << k << " = " << v << " ), "; }
+	cout << endl;
 
 	int W = 640, H = 480;
 	{
@@ -70,12 +71,7 @@ int main(int args, char ** argv){
 		const int blockHeight = (H -(border*2)) /numCols;
 		H = blockHeight*numCols + border*2;
 		for(int i = 0 ; i < numCols; i++){
-			TYPE r;
-			r.w=blockWidth;
-			r.h=blockHeight*(i+1);
-			r.y=H -border -r.h;
-			r.x=border*(i+1) +blockWidth*i;
-			blocks.push_back(r);
+			blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
 		}
 		W = (blockWidth+border)*numCols+border;
 	}

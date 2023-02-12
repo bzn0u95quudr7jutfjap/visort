@@ -24,13 +24,14 @@ clean:
 build:$(OBJD) $(BIN)
 
 run:build
-	./$(BIN) n=8 algo=bbs
-	./$(BIN) n=8 algo=cts
-	./$(BIN) n=8 algo=ezs
-	./$(BIN) n=8 algo=inss
-	./$(BIN) n=8 algo=sels
-	./$(BIN) n=32 algo=qcs
-	./$(BIN) n=32 algo=merge
+	./$(BIN) delay=20 n=20 algo=bbs
+	./$(BIN) delay=20 n=20 algo=cts
+	./$(BIN) delay=20 n=20 algo=ezs
+	./$(BIN) delay=20 n=20 algo=inss
+	./$(BIN) delay=20 n=20 algo=sels
+	./$(BIN) delay=20 n=64 algo=qcs
+	./$(BIN) delay=20 n=64 algo=merge
+	./$(BIN) delay=20 n=64 algo=merge-iter
 
 test:build
 	./$(BIN) n=20 algo=merge-iter

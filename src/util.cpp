@@ -3,7 +3,6 @@
 #include <thread>
 #include <chrono>
 #include <cstring>
-#include <random>
 #include <SDL2/SDL.h>
 #include "util.hpp"
 
@@ -13,14 +12,6 @@ int MS_DELAY = 60;
 SDL_Window * window = nullptr;
 SDL_Renderer * renderer = nullptr;
 vector<TYPE> blocks;
-
-void shuffle(vector<TYPE>& v){
-	static random_device rd;
-	static uniform_int_distribution<int> uid(0,v.size()-1);
-	for(int i = 0; i < v.size(); i++){
-		swapNonGraphic(v,i,uid(rd));
-	}
-}
 
 void printSDL(){
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);

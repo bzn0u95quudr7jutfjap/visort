@@ -13,6 +13,8 @@ using namespace std;
 
 #include "util.hpp"
 
+typedef void(*SortFun)(vector<TYPE>&);
+
 void qcs(vector<TYPE>& v);
 void cts(vector<TYPE>& v);
 void ezs(vector<TYPE>& v);
@@ -56,11 +58,12 @@ int main(int argc, char ** argv){
 	vector<string> algoToUse =	args.find("algo")	== args.end() ? vector<string>()	: str_split(args.at("algo"),",");
 	int W =				args.find("w")		== args.end() ? 640			: stoi(args.at("w"));
 	int H =				args.find("h")		== args.end() ? 480			: stoi(args.at("h"));
+	string caseToUse =		args.find("case")	== args.end() ? "random"		: args.at("case");
 
 	for(auto [k,v] : args){ cout << "( " << k << " = " << v << " ), "; }
 	cout << endl;
 
-	map<string,void(*)(vector<TYPE>&)> algo = {
+	map<string,SortFun> algos = {
 		{"bbs",bbs},
 		{"cts",cts},
 		{"ezs",ezs},
@@ -70,6 +73,22 @@ int main(int argc, char ** argv){
 		{"qcs",qcs},
 		{"merge",mergesort},
 		{"merge-iter",mergesort_iter}
+	};
+
+	map<string,SortFun> cases = {
+		{"best",	[](vector<TYPE>& v){}},
+		{"worst",	[](vector<TYPE>& v){
+			for(int i=0,j=v.size()-1;i<j;i++,j--){
+				swapNonGraphic(v,i,j);
+			}
+		}},
+		{"random",	[](vector<TYPE>& v){
+			static random_device rd;
+			static uniform_int_distribution<int> uid(0,v.size()-1);
+			for(int i = 0; i < v.size(); i++){
+				swapNonGraphic(v,i,uid(rd));
+			}
+		}}
 	};
 
 	const int blockWidth = (W -(border*numCols)) /numCols;
@@ -88,8 +107,9 @@ int main(int argc, char ** argv){
 	printSDL();
 
 	for_each(algoToUse.begin(),algoToUse.end(),[&](const string& a){
-		shuffle(blocks);
-		algo.at(a)(blocks);
+		cases.at(caseToUse)(blocks);
+		algos.at(a)(blocks);
+		SDL_Delay(1024 + 512);
 	});
 
 	SDL_Delay(1024 + 512);

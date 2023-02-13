@@ -11,6 +11,7 @@ using std::uniform_int_distribution;
 typedef SDL_Rect TYPE;
 
 void shuffle(vector<TYPE>& v, random_device&, uniform_int_distribution<int>&);
+void shuffle(vector<TYPE>& v);
 void printSDL();
 int cmp(vector<TYPE>&v, int i, int j);
 //int cmpNonGraphic(vector<TYPE>&v, int i, int j);

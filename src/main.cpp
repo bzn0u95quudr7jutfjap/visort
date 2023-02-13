@@ -30,13 +30,6 @@ extern SDL_Renderer * renderer;
 extern vector<TYPE> blocks;
 extern int MS_DELAY;
 
-bool str_equals(const char * s1, const char * s2){
-	return strcmp(s1,s2)==0;
-}
-bool str_equals(const string& s1, const string& s2){
-	return s1.compare(s2) == 0;
-}
-
 vector<string> str_split(string s, const string& del){
 	vector<string> ris;
 	int idx;
@@ -61,50 +54,43 @@ int main(int argc, char ** argv){
 	int border =			args.find("border")	== args.end() ? 4			: stoi(args.at("border"));
 	int numCols = 			args.find("n")		== args.end() ? 12			: stoi(args.at("n"));
 	vector<string> algoToUse =	args.find("algo")	== args.end() ? vector<string>()	: str_split(args.at("algo"),",");
+	int W =				args.find("w")		== args.end() ? 640			: stoi(args.at("w"));
+	int H =				args.find("h")		== args.end() ? 480			: stoi(args.at("h"));
 
 	for(auto [k,v] : args){ cout << "( " << k << " = " << v << " ), "; }
 	cout << endl;
 
-	int W = 640, H = 480;
-	{
-		const int blockWidth = (W -(border*numCols)) /numCols;
-		const int blockHeight = (H -(border*2)) /numCols;
-		H = blockHeight*numCols + border*2;
-		for(int i = 0 ; i < numCols; i++){
-			blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
-		}
-		W = (blockWidth+border)*numCols+border;
-	}
+	map<string,void(*)(vector<TYPE>&)> algo = {
+		{"bbs",bbs},
+		{"cts",cts},
+		{"ezs",ezs},
+		{"sels",sels},
+		{"inss",inss},
+		{"insr",insRec},
+		{"qcs",qcs},
+		{"merge",mergesort},
+		{"merge-iter",mergesort_iter}
+	};
 
-	random_device rd;
-	uniform_int_distribution<int> dist(0,numCols-1);
+	const int blockWidth = (W -(border*numCols)) /numCols;
+	const int blockHeight = (H -(border*2)) /numCols;
+	H = blockHeight*numCols + border*2;
+	for(int i = 0 ; i < numCols; i++){
+		blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
+	}
+	W = (blockWidth+border)*numCols+border;
 
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);
-	
-	//for(int i=0,j=blocks.size()-1; i < j; i++,j--){ swapNonGraphic(blocks,i,j); }
-
 	printSDL();
-	for(int i = 0; i < algoToUse.size(); i++){
-		shuffle(blocks,rd,dist);
 
-
-		if(		str_equals(algoToUse[i],"bbs"  )){		bbs(blocks);
-		}else if(	str_equals(algoToUse[i],"cts"  )){		cts(blocks);
-		}else if(	str_equals(algoToUse[i],"ezs"  )){		ezs(blocks);
-		}else if(	str_equals(algoToUse[i],"sels" )){		sels(blocks);
-		}else if(	str_equals(algoToUse[i],"inss" )){		inss(blocks);
-		}else if(	str_equals(algoToUse[i],"qcs"  )){		qcs(blocks);
-		}else if(	str_equals(algoToUse[i],"bgo"  )){		bgo(blocks);
-		}else if(	str_equals(algoToUse[i],"merge")){		mergesort(blocks);
-		}else if(	str_equals(algoToUse[i],"merge-iter")){		mergesort_iter(blocks);
-		}else if(	str_equals(algoToUse[i],"insr" )){		insRec(blocks);
-		//}else if(strcmp(argv[i],"qcsm")==0){	qcsm(blocks);
-		}
-	}
+	for_each(algoToUse.begin(),algoToUse.end(),[&](const string& a){
+		shuffle(blocks);
+		algo.at(a)(blocks);
+	});
 
 	SDL_Delay(1024 + 512);
 }

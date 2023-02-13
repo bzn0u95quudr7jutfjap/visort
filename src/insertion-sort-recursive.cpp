@@ -14,7 +14,7 @@ void insertionRecursionBody(vector<TYPE>& v, int len, int idx){
 	}
 }
 
-void insRec(vector<TYPE>& v){
+void insertion_sort_recursive(vector<TYPE>& v){
 	insertionRecursionBody(v,v.size()-1,0);
 	isOrdered(v);
 }

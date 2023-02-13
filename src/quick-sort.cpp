@@ -34,7 +34,7 @@ void qcs_b(vector<TYPE>& v,int l, int h){
 	}
 }
 
-void qcs(vector<TYPE>& v){
+void quick_sort(vector<TYPE>& v){
 	qcs_b(v,0,v.size()-1);
 	isOrdered(v);
 }

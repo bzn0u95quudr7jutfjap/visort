@@ -13,7 +13,7 @@ int idx_min(vector<TYPE>& v, int i, int j){
 	return idx;
 }
 
-void sels(vector<TYPE>& v){
+void selection_sort(vector<TYPE>& v){
 	for(int i = 0; i < v.size(); i++){
 		swap(v,i,idx_min(v,i,v.size()));
 	}

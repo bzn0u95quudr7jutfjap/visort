@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void bgo(vector<SDL_Rect>& v){
+void bogo_sort(vector<SDL_Rect>& v){
 	random_device rd;
 	mt19937 gen(rd());
 	uniform_int_distribution<int> dist(1,v.size());

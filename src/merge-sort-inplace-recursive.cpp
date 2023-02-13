@@ -21,7 +21,7 @@ void mergerec(vector<TYPE>& v, int l, int h){
 	}
 }
 
-void mergesort(vector<TYPE>& v){
+void mergesort_inplace_recursive(vector<TYPE>& v){
 	printSDL();
 	mergerec(v,0,v.size()-1);
 	isOrdered(v);

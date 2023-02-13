@@ -15,17 +15,16 @@ using namespace std;
 
 typedef void(*SortFun)(vector<TYPE>&);
 
-void qcs(vector<TYPE>& v);
-void cts(vector<TYPE>& v);
-void ezs(vector<TYPE>& v);
-void bbs(vector<TYPE>& v);
-void bgo(vector<TYPE>& v);
-void sels(vector<TYPE>& v);
-void inss(vector<TYPE>& v);
-void mergesort(vector<TYPE>& v);
-void mergesort_iter(vector<TYPE>& v);
-//void qcsm(vector<TYPE>& v);
-void insRec(vector<TYPE>& v);
+void bogo_sort(vector<TYPE>& v);
+void bubble_sort(vector<TYPE>& v);
+void cocktail_sort(vector<TYPE>& v);
+void easy_sort(vector<TYPE>& v);
+void selection_sort(vector<TYPE>& v);
+void insertion_sort(vector<TYPE>& v);
+void insertion_sort_recursive(vector<TYPE>& v);
+void quick_sort(vector<TYPE>& v);
+void mergesort_inplace_recursive(vector<TYPE>& v);
+void mergesort_inplace_iterative(vector<TYPE>& v);
 
 extern SDL_Window * window;
 extern SDL_Renderer * renderer;
@@ -64,15 +63,15 @@ int main(int argc, char ** argv){
 	cout << endl;
 
 	map<string,SortFun> algos = {
-		{"bbs",bbs},
-		{"cts",cts},
-		{"ezs",ezs},
-		{"sels",sels},
-		{"inss",inss},
-		{"insr",insRec},
-		{"qcs",qcs},
-		{"merge",mergesort},
-		{"merge-iter",mergesort_iter}
+		{"bbs",bubble_sort},
+		{"cts",cocktail_sort},
+		{"ezs",easy_sort},
+		{"sels",selection_sort},
+		{"inss",insertion_sort},
+		{"insr",insertion_sort_recursive},
+		{"qcs",quick_sort},
+		{"merge",mergesort_inplace_recursive},
+		{"merge-iter",mergesort_inplace_iterative}
 	};
 
 	map<string,SortFun> cases = {

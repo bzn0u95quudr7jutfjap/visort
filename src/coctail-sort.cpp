@@ -2,7 +2,7 @@
 #include "util.hpp"
 using namespace std;
 
-void cts(vector<TYPE>& v){
+void cocktail_sort(vector<TYPE>& v){
 	while(!isOrdered(v)){
 		for(int i = 0; i < v.size()-1; i++){
 			int j = i+1;

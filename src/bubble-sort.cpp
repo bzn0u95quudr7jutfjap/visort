@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void bbs(vector<TYPE>& v){
+void bubble_sort(vector<TYPE>& v){
 	while(!isOrdered(v)){
 		for(int i = 0; i < v.size()-1; i++){
 			int j = i+1;

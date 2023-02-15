@@ -14,3 +14,14 @@ void bubble_sort(vector<TYPE>& v){
 		}
 	}
 }
+
+void bubble_sort_optimized(vector<TYPE>& v){
+	for(int i=0; i<v.size(); i++){
+		for(int j=1;j<v.size()-i;j++){
+			if(cmp(v,j-1,j)<0){
+				swap(v,j-1,j);
+			}
+		}
+	}
+	isOrdered(v);
+}

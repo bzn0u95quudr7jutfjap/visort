@@ -1,4 +1,5 @@
 #include <vector>
+#include <queue>
 #include <iostream>
 #include "util.hpp"
 using namespace std;
@@ -29,9 +30,32 @@ void qcs_b(vector<TYPE>& v,int l, int h){
 	}
 }
 
+//void quick_sort(vector<TYPE>& v){
+//	qcs_b(v,0,v.size()-1);
+//	//_quick_sort_medium_recursion(v,0,v.size()-1);
+//	isOrdered(v);
+//}
+
 void quick_sort(vector<TYPE>& v){
-	qcs_b(v,0,v.size()-1);
-	//_quick_sort_medium_recursion(v,0,v.size()-1);
+	queue<size_t> stack;
+	stack.push(0);
+	stack.push(v.size()-1);
+
+	while(stack.size()){
+		size_t l = stack.front(); stack.pop();
+		size_t h = stack.front(); stack.pop();
+		if(l<h){
+			int i_p = _partition_last_element(v,l,h);
+			if(l < i_p-1){
+				stack.push(0 <= l ? l : 0);
+				stack.push(i_p-1 < v.size() ? i_p-1 : v.size()-1 );
+			}
+			if(i_p+1 < h){
+				stack.push(0 <= i_p+1 ? i_p+1 : 0 );
+				stack.push(h < v.size() ? h : v.size());
+			}
+		}
+	}
 	isOrdered(v);
 }
 

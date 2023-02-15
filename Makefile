@@ -33,6 +33,9 @@ run:build
 	./$(BIN) algo=merge
 	./$(BIN) algo=merge-iter
 
+quick:build
+	./$(BIN) delay=4 n=400 algo=qcs case=random border=0
+
 best:build
 	./$(BIN) delay=16 n=16 algo=bbs,cts,ezs,inss,sels,qcs,merge,merge-iter case=best
                                                                                        

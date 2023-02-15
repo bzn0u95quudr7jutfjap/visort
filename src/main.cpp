@@ -121,9 +121,9 @@ int main(int argc, char ** argv){
 		args[arg[0]]=arg[1];
 	}
 
-	MS_DELAY =			args.find("delay")	== args.end() ? 60			: stoi(args.at("delay"));
-	int border =			args.find("border")	== args.end() ? 4			: stoi(args.at("border"));
-	int numCols = 			args.find("n")		== args.end() ? 12			: stoi(args.at("n"));
+	MS_DELAY =			args.find("delay")	== args.end() ? 16			: stoi(args.at("delay"));
+	int border =			args.find("border")	== args.end() ? 0			: stoi(args.at("border"));
+	int numCols = 			args.find("n")		== args.end() ? 64			: stoi(args.at("n"));
 	vector<string> algoToUse =	args.find("algo")	== args.end() ? vector<string>()	: str_split(args.at("algo"),",");
 	int W =				args.find("w")		== args.end() ? 640			: stoi(args.at("w"));
 	int H =				args.find("h")		== args.end() ? 480			: stoi(args.at("h"));

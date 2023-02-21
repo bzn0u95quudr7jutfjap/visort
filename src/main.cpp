@@ -23,6 +23,7 @@ void selection_sort(vector<TYPE>& v);
 void insertion_sort(vector<TYPE>& v);
 void insertion_sort_recursive(vector<TYPE>& v);
 void quick_sort(vector<TYPE>& v);
+void quick_sort_iterative(vector<TYPE>& v);
 void merge_sort_inplace_recursive(vector<TYPE>& v);
 void merge_sort_inplace_iterative(vector<TYPE>& v);
 void merge_sort_copy_recursive(vector<TYPE>& v);
@@ -114,7 +115,7 @@ vector<string> str_split(string s, const string& del){
 }
 
 int main(int argc, char ** argv){
-	signal(SIGINT,[](int sig){ exit(1);});
+	signal(SIGINT,[](int sig){ exit(1); });
 
 	map<string,string> args;
 	for(int i=1; i < argc; i++){
@@ -140,7 +141,8 @@ int main(int argc, char ** argv){
 		{"sels",selection_sort},
 		{"inss",insertion_sort},
 		{"insr",insertion_sort_recursive},
-		{"qcs",quick_sort},
+		{"quick",quick_sort},
+		{"quick-iter",quick_sort_iterative},
 		{"merge",merge_sort_inplace_recursive},
 		{"merge-iter",merge_sort_inplace_iterative},
 		{"merge-copy",merge_sort_copy_recursive},
@@ -186,4 +188,5 @@ int main(int argc, char ** argv){
 	});
 
 	SDL_Delay(1024 + 512);
+	SDL_Quit();
 }

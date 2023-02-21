@@ -1,126 +1,106 @@
 #include <vector>
+#include <numeric>
 #include <queue>
+#include <random>
 #include <iostream>
 #include "util.hpp"
 using namespace std;
 
-int _partition_last_element(vector<TYPE>& v, int l, int h){
-	int i_p = h;
-	int c = 0;
-	for(int i=l; i < h; i++){ if(cmp(v,i,i_p)>=0){ c++; } }
-	i_p = l+c;
-	swap(v,i_p,h);
-	int i=l, j=h;
-	while(i < i_p && j > i_p){
-		while(cmp(v,i,i_p) > 0){ i++; }
-		while(cmp(v,j,i_p) < 0){ j--; }
-		if(i < i_p && i_p < j){
-			swap(v,i,j);
-			i++; j--;
+void _partition(vector<TYPE>& v, int l, int p, int h){
+	while(l < p && p < h){
+		while(cmp(v,l,p)>0){l++;}
+		while(cmp(v,p,h)>0){h--;}
+		if(l < p && p < h){
+			swap(v,l,h);
+			l++;
+			h--;
 		}
 	}
-	return i_p;
 }
 
-void qcs_b(vector<TYPE>& v,int l, int h){
+int __place_pivot_in_correct_place(vector<TYPE>& v, int l, int h, int r){
+	int p = l;
+	for(int i=l; i <= h; i++){ if(cmp(v,i,r)>0){ p++; } }
+	swap(v,p,r);
+	return p;
+}
+
+int _pivot_last(vector<TYPE>& v, int l, int h){
+	return __place_pivot_in_correct_place(v,l,h,h);
+}
+
+int _pivot_first(vector<TYPE>& v, int l, int h){
+	return __place_pivot_in_correct_place(v,l,h,l);
+}
+
+int _pivot_random(vector<TYPE>& v, int l, int h){
+	random_device rd;
+	uniform_int_distribution uid(l,h);
+	return __place_pivot_in_correct_place(v,l,h,uid(rd));
+}
+
+int _pivot_medium(vector<TYPE>& v, int l, int h){
+
+	typedef int (*vec_func)(vector<TYPE>&,int,int);
+	typedef int (*math_func)(int);
+
+	vec_func _idx_min = [](vector<TYPE>& v, int i, int j){
+		int idx = i;
+		for(int k = i ; k <= j; k++){ if(cmp(v,idx,k) < 0){ idx = k; } }
+		return idx;
+	};
+	vec_func _idx_max = [](vector<TYPE>& v, int i, int j){
+		int idx = i;
+		for(int k = i ; k <= j; k++){ if(cmp(v,idx,k) > 0){ idx = k; } }
+		return idx;
+	};
+
+	math_func _abs = [](int a){ return 0<=a?a:-a ; };
+
+	int min = _idx_min(v,l,h);
+	int max = _idx_max(v,l,h);
+	int avg = (v[max].h + v[min].h)/2;
+	int r = l;
+	for(int i=l;i<h;i++){
+		if(_abs(avg - v[i].h)<_abs(avg - v[r].h)){ r=i; }
+	}
+
+	return __place_pivot_in_correct_place(v,l,h,r);
+}
+
+void _quick_sort_reursion(vector<TYPE>& v,int l, int h, int (*_pivot)(vector<TYPE>&,int,int)){
 	if(l < h){
-		int i_p = _partition_last_element(v,l,h);
-		qcs_b(v,l,i_p-1);
-		qcs_b(v,i_p+1,h);
+		int p = _pivot(v,l,h);
+		_partition(v,l,p,h);
+		_quick_sort_reursion(v,l,p-1,_pivot);
+		_quick_sort_reursion(v,p+1,h,_pivot);
 	}
 }
 
 void quick_sort(vector<TYPE>& v){
-	qcs_b(v,0,v.size()-1);
-	//_quick_sort_medium_recursion(v,0,v.size()-1);
+	printSDL();
+	_quick_sort_reursion(v,0,v.size()-1,_pivot_random);
 	isOrdered(v);
 }
 
-//void quick_sort(vector<TYPE>& v){
-//	queue<size_t> stack;
-//	stack.push(0);
-//	stack.push(v.size()-1);
-//
-//	while(stack.size()){
-//		size_t l = stack.front(); stack.pop();
-//		size_t h = stack.front(); stack.pop();
-//		if(l<h){
-//			int i_p = _partition_last_element(v,l,h);
-//			if(l < i_p-1){
-//				stack.push(0 <= l ? l : 0);
-//				stack.push(i_p-1 < v.size() ? i_p-1 : v.size()-1 );
-//			}
-//			if(i_p+1 < h){
-//				stack.push(0 <= i_p+1 ? i_p+1 : 0 );
-//				stack.push(h < v.size() ? h : v.size());
-//			}
-//		}
-//	}
-//	isOrdered(v);
-//}
+void quick_sort_iterative(vector<TYPE>& v){
+	printSDL();
 
-//int _idx_min(vector<TYPE>& v, int i, int j){
-//	int idx = i;
-//	for(int k = i ; k <= j; k++){ if(cmp(v,idx,k) < 0){ idx = k; } }
-//	return idx;
-//}
-//int _idx_max(vector<TYPE>& v, int i, int j){
-//	int idx = i;
-//	for(int k = i ; k <= j; k++){ if(cmp(v,idx,k) > 0){ idx = k; } }
-//	return idx;
-//}
+	queue<int> stack;
+	stack.push(0);
+	stack.push(v.size()-1);
 
-//int _abs(int a){ return 0<=a?a:-a ; }
-//
-//int _partition_medium(vector<TYPE>& v,const int l,const int h){
-//	int i_mn=_idx_min(v,l,h), i_mx=_idx_max(v,l,h);
-//	swap(v,l,i_mn);
-//	swap(v,h,i_mx);
-//	int avg = (v[l].h + v[h].h)/2;
-//	int i_p = l+1;
-//	for(int i=l+1;i<h;i++){
-//		if(_abs(avg - v[i].h)<_abs(avg - v[i_p].h)){
-//			i_p=i;
-//		}
-//	}
-//	int c = 0;
-//	for(int i=l+1;i<h;i++){
-//		if(cmp(v,i,i_p)>=0){
-//			c++;
-//		}
-//	}
-//	swap(v,i_p,c+l);
-//	i_p=c+l;
-//	int i=l+1, j=h;
-//	while(i < i_p && i_p < j){
-//		while(cmp(v,i,i_p) > 0){ i++; }
-//		while(cmp(v,j,i_p) < 0){ j--; }
-//		if(i < i_p && i_p < j){
-//			swap(v,i,j);
-//			i++; j--;
-//		}
-//	}
-//	return i_p;
-//}
+	while(stack.size()){
+		int l = stack.front(); stack.pop();
+		int h = stack.front(); stack.pop();
+		if( l < h ){
+			int p = _pivot_random(v,l,h);
+			_partition(v,l,p,h);
+			stack.push(l); stack.push(p-1);
+			stack.push(p+1); stack.push(h);
+		}
+	}
 
-//void _quick_sort_medium_recursion(vector<TYPE>& v,int l, int h){
-//	if(h-l>=3){
-//		int i_p = _partition_medium(v,l,h);
-//		_quick_sort_medium_recursion(v,l,i_p-1);
-//		_quick_sort_medium_recursion(v,i_p+1,h);
-//	}
-//}
+	isOrdered(v);
+}
 
-//void insertion_sort(vector<TYPE>& v);
-//
-//void quick_sort(vector<TYPE>& v){
-//	//qcs_b(v,0,v.size()-1);
-//	_quick_sort_medium_recursion(v,0,v.size()-1);
-//	//insertion_sort(v);
-//	isOrdered(v);
-//}
-//
-//void quick_sort_medium(vector<TYPE>& v){
-//	_quick_sort_medium_recursion(v,0,v.size()-1);
-//	isOrdered(v);
-//}

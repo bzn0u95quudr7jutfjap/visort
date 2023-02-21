@@ -124,12 +124,34 @@ int main(int argc, char ** argv){
 	}
 
 	MS_DELAY =			args.find("delay")	== args.end() ? 16			: stoi(args.at("delay"));
-	int border =			args.find("border")	== args.end() ? 0			: stoi(args.at("border"));
 	int numCols = 			args.find("n")		== args.end() ? 64			: stoi(args.at("n"));
 	vector<string> algoToUse =	args.find("algo")	== args.end() ? vector<string>()	: str_split(args.at("algo"),",");
-	int W =				args.find("w")		== args.end() ? 640			: stoi(args.at("w"));
-	int H =				args.find("h")		== args.end() ? 480			: stoi(args.at("h"));
 	string caseToUse =		args.find("case")	== args.end() ? "random"		: args.at("case");
+	int border =			args.find("border")	== args.end() ? 0			: stoi(args.at("border"));
+	int width =			args.find("w")		== args.end() ? 640			: stoi(args.at("w"));
+	int blockWidth =		args.find("bw")		== args.end() ? 1			: stoi(args.at("bw"));
+	int required_width = border*(1+numCols) + blockWidth*numCols;
+	if(width < required_width || !(args.find("bw") == args.end())){
+		width = required_width;
+	}else{
+		blockWidth = width/required_width;
+		width = blockWidth*numCols + border*(numCols+1);
+	}
+
+	int height =			args.find("h")		== args.end() ? 480			: stoi(args.at("h"));
+	int blockHeight =		args.find("bh")		== args.end() ? 1			: stoi(args.at("bh"));
+	int required_height = numCols + 2*border;
+	if(height < required_height || !(args.find("bh") == args.end())){
+		height = required_height;
+	}else{
+		blockHeight = height/required_height;
+		height = blockHeight*numCols + 2*border;
+	}
+
+	for(int i = 0 ; i < numCols; i++){
+		blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=height-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
+	}
+
 
 	for(auto [k,v] : args){ cout << "( " << k << " = " << v << " ), "; }
 	cout << endl;
@@ -166,16 +188,24 @@ int main(int argc, char ** argv){
 		}}
 	};
 
-	const int blockWidth = (W -(border*numCols)) /numCols;
-	const int blockHeight = (H -(border*2)) /numCols;
-	H = blockHeight*numCols + border*2;
-	for(int i = 0 ; i < numCols; i++){
-		blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
-	}
-	W = (blockWidth+border)*numCols+border;
+	//const int blockWidth = (W -(border*numCols)) /numCols;
+	//const int blockHeight = (H -(border*2)) /numCols;
+	//H = blockHeight*numCols + border*2;
+	//W = (blockWidth+border)*numCols+border;
+	//for(int i = 0 ; i < numCols; i++){
+	//	blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
+	//}
+	
+	//int required_width = (blockWidth+border)*numCols + border;
+	//int required_height = blockHeight*numCols + border*2;
+	//W = (numCols+1) * border + (W/required_width > 0 ? (W/required_width) : 1) * numCols * blockWidth;
+
+	//for(int i=0; i<numCols; i++){
+	//	blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
+	//}
 
 	SDL_Init(SDL_INIT_EVERYTHING);
-	SDL_CreateWindowAndRenderer(W,H,0,&window,&renderer);
+	SDL_CreateWindowAndRenderer(width,height,0,&window,&renderer);
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);
 	SDL_RenderClear(renderer);
 	SDL_RenderPresent(renderer);

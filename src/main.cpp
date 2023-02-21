@@ -27,6 +27,7 @@ void merge_sort_inplace_recursive(vector<TYPE>& v);
 void merge_sort_inplace_iterative(vector<TYPE>& v);
 void merge_sort_copy_recursive(vector<TYPE>& v);
 void merge_sort_copy_iterative(vector<TYPE>& v);
+void merge_sort_copy_iterative_post(vector<TYPE>& v);
 
 int MS_DELAY = 60;
 SDL_Window * window = nullptr;
@@ -143,7 +144,8 @@ int main(int argc, char ** argv){
 		{"merge",merge_sort_inplace_recursive},
 		{"merge-iter",merge_sort_inplace_iterative},
 		{"merge-copy",merge_sort_copy_recursive},
-		{"merge-copy-iter",merge_sort_copy_iterative}
+		{"merge-copy-iter",merge_sort_copy_iterative},
+		{"merge-copy-iter-post",merge_sort_copy_iterative_post}
 	};
 
 	map<string,SortFun> cases = {

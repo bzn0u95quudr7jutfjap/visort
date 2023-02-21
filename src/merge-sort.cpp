@@ -54,24 +54,13 @@ void _merge_sort_copy_merge(vector<TYPE>& v,int i,int j,int k){
 	int jdx = j;
 	int a = 0;
 	while(a < proxy.size() && idx < j && jdx < k){
-		if(cmp(v,idx,jdx)>0){
-			proxy[a]=v[idx];
-			idx++;
-		}else{
-			proxy[a]=v[jdx];
-			jdx++;
-		}
-		a++;
+		proxy[a++]=v[ cmp(v,idx,jdx)>0 ? idx++ : jdx++ ];
 	}
 	while(a < proxy.size() && idx < j){
-		proxy[a] = v[idx];
-		idx++;
-		a++;
+		proxy[a++] = v[idx++];
 	}
 	while(a < proxy.size() && jdx < k){
-		proxy[a] = v[jdx];
-		jdx++;
-		a++;
+		proxy[a++] = v[jdx++];
 	}
 	for(int a=0; a<proxy.size(); a++){
 		v[i+a].y = proxy[a].y;
@@ -100,6 +89,34 @@ void merge_sort_copy_iterative(vector<TYPE>& v){
 	for(int len = 1; len < v.size(); len*=2){
 		for(int i=0; i < v.size(); i+=len*2){
 			_merge_sort_copy_merge(v,i,i+len,i+len*2);
+		}
+	}
+	isOrdered(v);
+}
+
+void merge_sort_copy_iterative_post(vector<TYPE>& v){
+	printSDL();
+	vector<TYPE> proxy(v.size());
+	for(int len = 1; len < v.size(); len*=2){
+		for(int a=0; a < v.size(); a+=len*2){
+			int b = a;
+			int i = a, idx = i;
+			int j = i+len, jdx = j;
+			int k = i+len*2	< v.size() ? i+len*2 : v.size();
+			while(idx < j && jdx < k && a < k){
+				proxy[b++] = v[cmp(v,idx,jdx)>0 ? idx++ : jdx++];
+			}
+			while(b < proxy.size() && idx < j){
+				proxy[b++] = v[idx++];
+			}
+			while(b < proxy.size() && jdx < k){
+				proxy[b++] = v[jdx++];
+			}
+		}
+		for(int i=0; i < v.size(); i++){
+			v[i].y = proxy[i].y;
+			v[i].h = proxy[i].h;
+			swap(v,i,i);
 		}
 	}
 	isOrdered(v);

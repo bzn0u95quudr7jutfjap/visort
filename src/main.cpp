@@ -128,7 +128,7 @@ int main(int argc, char ** argv){
 	vector<string> algoToUse =	args.find("algo")	== args.end() ? vector<string>()	: str_split(args.at("algo"),",");
 	string caseToUse =		args.find("case")	== args.end() ? "random"		: args.at("case");
 	int border =			args.find("border")	== args.end() ? 0			: stoi(args.at("border"));
-	int width =			args.find("w")		== args.end() ? 640			: stoi(args.at("w"));
+	int width =			args.find("w")		== args.end() ? 800			: stoi(args.at("w"));
 	int blockWidth =		args.find("bw")		== args.end() ? 1			: stoi(args.at("bw"));
 	int required_width = border*(1+numCols) + blockWidth*numCols;
 	if(width < required_width || !(args.find("bw") == args.end())){
@@ -137,8 +137,7 @@ int main(int argc, char ** argv){
 		blockWidth = width/required_width;
 		width = blockWidth*numCols + border*(numCols+1);
 	}
-
-	int height =			args.find("h")		== args.end() ? 480			: stoi(args.at("h"));
+	int height =			args.find("h")		== args.end() ? 800			: stoi(args.at("h"));
 	int blockHeight =		args.find("bh")		== args.end() ? 1			: stoi(args.at("bh"));
 	int required_height = numCols + 2*border;
 	if(height < required_height || !(args.find("bh") == args.end())){

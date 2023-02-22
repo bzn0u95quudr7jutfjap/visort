@@ -187,22 +187,6 @@ int main(int argc, char ** argv){
 		}}
 	};
 
-	//const int blockWidth = (W -(border*numCols)) /numCols;
-	//const int blockHeight = (H -(border*2)) /numCols;
-	//H = blockHeight*numCols + border*2;
-	//W = (blockWidth+border)*numCols+border;
-	//for(int i = 0 ; i < numCols; i++){
-	//	blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
-	//}
-	
-	//int required_width = (blockWidth+border)*numCols + border;
-	//int required_height = blockHeight*numCols + border*2;
-	//W = (numCols+1) * border + (W/required_width > 0 ? (W/required_width) : 1) * numCols * blockWidth;
-
-	//for(int i=0; i<numCols; i++){
-	//	blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=H-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
-	//}
-
 	SDL_Init(SDL_INIT_EVERYTHING);
 	SDL_CreateWindowAndRenderer(width,height,0,&window,&renderer);
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);

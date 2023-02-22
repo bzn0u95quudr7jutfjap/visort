@@ -8,10 +8,10 @@ using namespace std;
 
 void _partition(vector<TYPE>& v, int l, int p, int h){
 	while(l < p && p < h){
-		while(cmp(v,l,p)>0){l++;}
-		while(cmp(v,p,h)>0){h--;}
+		while(cmp(v[l],v[p])>0){l++;}
+		while(cmp(v[p],v[h])>0){h--;}
 		if(l < p && p < h){
-			swap(v,l,h);
+			swap(v[l],v[h]);
 			l++;
 			h--;
 		}
@@ -20,8 +20,8 @@ void _partition(vector<TYPE>& v, int l, int p, int h){
 
 int __place_pivot_in_correct_place(vector<TYPE>& v, int l, int h, int r){
 	int p = l;
-	for(int i=l; i <= h; i++){ if(cmp(v,i,r)>0){ p++; } }
-	swap(v,p,r);
+	for(int i=l; i <= h; i++){ if(cmp(v[i],v[r])>0){ p++; } }
+	swap(v[p],v[r]);
 	return p;
 }
 
@@ -46,12 +46,12 @@ int _pivot_medium(vector<TYPE>& v, int l, int h){
 
 	vec_func _idx_min = [](vector<TYPE>& v, int i, int j){
 		int idx = i;
-		for(int k = i ; k <= j; k++){ if(cmp(v,idx,k) < 0){ idx = k; } }
+		for(int k = i ; k <= j; k++){ if(cmp(v[idx],v[k]) < 0){ idx = k; } }
 		return idx;
 	};
 	vec_func _idx_max = [](vector<TYPE>& v, int i, int j){
 		int idx = i;
-		for(int k = i ; k <= j; k++){ if(cmp(v,idx,k) > 0){ idx = k; } }
+		for(int k = i ; k <= j; k++){ if(cmp(v[idx],v[k]) > 0){ idx = k; } }
 		return idx;
 	};
 

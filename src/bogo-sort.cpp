@@ -12,6 +12,6 @@ void bogo_sort(vector<SDL_Rect>& v){
 	while(!isOrdered(v)){
 		int rand1 = dist(gen);
 		int rand2 = dist(gen);
-		swap(v,rand1,rand2);
+		swap(v[rand1],v[rand2]);
 	}
 }

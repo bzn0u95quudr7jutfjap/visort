@@ -45,7 +45,7 @@ void printSDL(){
 	SDL_Delay(MS_DELAY);
 }
 
-void printSDL(int i, int j){
+void printSDL(TYPE& a, TYPE& b){
 	SDL_SetRenderDrawColor(renderer,0,0,0,255);
 	SDL_RenderClear(renderer);
 	SDL_SetRenderDrawColor(renderer,255,255,255,255);
@@ -53,16 +53,14 @@ void printSDL(int i, int j){
 	SDL_RenderFillRects(renderer,blocks.data(),blocks.size());
 
 	SDL_SetRenderDrawColor(renderer,0,0x88,0xcc,255);
-	SDL_RenderFillRect(renderer,&(blocks[i]));
+	SDL_RenderFillRect(renderer,&a);
 	SDL_SetRenderDrawColor(renderer,0xff,0x0,0x0,255);
-	SDL_RenderFillRect(renderer,&(blocks[j]));
+	SDL_RenderFillRect(renderer,&b);
 	SDL_RenderPresent(renderer);
 	SDL_Delay(MS_DELAY);
 }
 
-void swapNonGraphic(vector<TYPE>& v, int i, int j){
-		TYPE& a = v[i];
-		TYPE& b = v[j];
+void swapNonGraphic(TYPE& a, TYPE& b){
 		int c = a.h;
 		a.h = b.h;
 		b.h = c;
@@ -71,16 +69,16 @@ void swapNonGraphic(vector<TYPE>& v, int i, int j){
 		b.y = c;
 }
 
-void swap(vector<TYPE>& v, int i, int j){
-	swapNonGraphic(v,i,j);
-	printSDL(i,j);
+void swap(TYPE& a, TYPE& b){
+	swapNonGraphic(a,b);
+	printSDL(a,b);
 }
-int cmpNonGraphic(vector<TYPE>& v, int i, int j){
-	return v[j].h - v[i].h;
+int cmpNonGraphic(TYPE& a, TYPE& b){
+	return b.h - a.h;
 }
-int cmp(vector<TYPE>& v, int i, int j){
-	printSDL(i,j);
-	return cmpNonGraphic(v,i,j);
+int cmp(TYPE& a, TYPE& b){
+	printSDL(a,b);
+	return cmpNonGraphic(a,b);
 }
 
 bool isOrdered(vector<TYPE>& v){
@@ -91,7 +89,7 @@ bool isOrdered(vector<TYPE>& v){
 	SDL_RenderPresent(renderer);
 	SDL_Delay(MS_DELAY);
 	for(int i = 0; i < v.size()-1; i++){
-		if(cmpNonGraphic(v,i,i+1)<0){
+		if(cmpNonGraphic(v[i],v[i+1])<0){
 			i = v.size()+1;
 			ordered = 0;
 		}else{
@@ -175,14 +173,14 @@ int main(int argc, char ** argv){
 		{"best",	[](vector<TYPE>& v){}},
 		{"worst",	[](vector<TYPE>& v){
 			for(int i=0,j=v.size()-1;i<j;i++,j--){
-				swapNonGraphic(v,i,j);
+				swapNonGraphic(v[i],v[j]);
 			}
 		}},
 		{"random",	[](vector<TYPE>& v){
 			static random_device rd;
 			static uniform_int_distribution<int> uid(0,v.size()-1);
 			for(int i = 0; i < v.size(); i++){
-				swapNonGraphic(v,i,uid(rd));
+				swapNonGraphic(v[i],v[uid(rd)]);
 			}
 		}}
 	};

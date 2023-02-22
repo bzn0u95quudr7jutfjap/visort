@@ -4,7 +4,7 @@
 
 void _merge_sort_inplace_move(vector<TYPE>& v,int i, int j){
 	while(i < j){
-		swap(v,j-1,j);
+		swapNonGraphic(v[j-1],v[j]);
 		j--;
 	}
 }
@@ -12,7 +12,7 @@ void _merge_sort_inplace_move(vector<TYPE>& v,int i, int j){
 void _merge_sort_inplace_merge(vector<TYPE>& v,int i, int j, int k){
 	k = k < v.size() ? k : v.size();
 	while(i<j && j<k){
-		if(cmp(v,i,j)<0){
+		if(cmp(v[i],v[j])<0){
 			_merge_sort_inplace_move(v,i,j);
 			j++;
 			i++;
@@ -54,7 +54,7 @@ void _merge_sort_copy_merge(vector<TYPE>& v,int i,int j,int k){
 	int jdx = j;
 	int a = 0;
 	while(a < proxy.size() && idx < j && jdx < k){
-		proxy[a++]=v[ cmp(v,idx,jdx)>0 ? idx++ : jdx++ ];
+		proxy[a++]=v[ cmp(v[idx],v[jdx])>0 ? idx++ : jdx++ ];
 	}
 	while(a < proxy.size() && idx < j){
 		proxy[a++] = v[idx++];
@@ -65,7 +65,7 @@ void _merge_sort_copy_merge(vector<TYPE>& v,int i,int j,int k){
 	for(int a=0; a<proxy.size(); a++){
 		v[i+a].y = proxy[a].y;
 		v[i+a].h = proxy[a].h;
-		swap(v,i+a,i+a);
+		swap(v[i+a],v[i+a]);
 	}
 }
 
@@ -104,7 +104,7 @@ void merge_sort_copy_iterative_post(vector<TYPE>& v){
 			int j = i+len, jdx = j;
 			int k = i+len*2	< v.size() ? i+len*2 : v.size();
 			while(idx < j && jdx < k && a < k){
-				proxy[b++] = v[cmp(v,idx,jdx)>0 ? idx++ : jdx++];
+				proxy[b++] = v[cmp(v[idx],v[jdx])>0 ? idx++ : jdx++];
 			}
 			while(b < proxy.size() && idx < j){
 				proxy[b++] = v[idx++];
@@ -116,7 +116,7 @@ void merge_sort_copy_iterative_post(vector<TYPE>& v){
 		for(int i=0; i < v.size(); i++){
 			v[i].y = proxy[i].y;
 			v[i].h = proxy[i].h;
-			swap(v,i,i);
+			swap(v[i],v[i]);
 		}
 	}
 	isOrdered(v);

@@ -154,19 +154,19 @@ int main(int argc, char ** argv){
 	cout << endl;
 
 	map<string,SortFun> algos = {
-		{"bbs",bubble_sort},
-		{"cts",cocktail_sort},
-		{"ezs",easy_sort},
-		{"sels",selection_sort},
-		{"inss",insertion_sort},
-		{"insr",insertion_sort_recursive},
-		{"quick",quick_sort},
-		{"quick-iter",quick_sort_iterative},
-		{"merge",merge_sort_inplace_recursive},
-		{"merge-iter",merge_sort_inplace_iterative},
-		{"merge-copy",merge_sort_copy_recursive},
-		{"merge-copy-iter",merge_sort_copy_iterative},
-		{"merge-copy-iter-post",merge_sort_copy_iterative_post}
+		{"bubble"		,bubble_sort},
+		{"cocktail"		,cocktail_sort},
+		{"easy"			,easy_sort},
+		{"selection"		,selection_sort},
+		{"insertion"		,insertion_sort},
+		{"insertion-rec"	,insertion_sort_recursive},
+		{"quick"		,quick_sort},
+		{"quick-iter"		,quick_sort_iterative},
+		{"merge-inplace"	,merge_sort_inplace_recursive},
+		{"merge-inplace-iter"	,merge_sort_inplace_iterative},
+		{"merge"		,merge_sort_copy_recursive},
+		{"merge-iter"		,merge_sort_copy_iterative},
+		{"merge-iter-post"	,merge_sort_copy_iterative_post}
 	};
 
 	map<string,SortFun> cases = {

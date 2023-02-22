@@ -30,7 +30,7 @@ void merge_sort_copy_recursive(vector<TYPE>& v);
 void merge_sort_copy_iterative(vector<TYPE>& v);
 void merge_sort_copy_iterative_post(vector<TYPE>& v);
 
-int MS_DELAY = 60;
+int MS_DELAY;
 SDL_Window * window = nullptr;
 SDL_Renderer * renderer = nullptr;
 vector<TYPE> blocks;
@@ -123,8 +123,8 @@ int main(int argc, char ** argv){
 		args[arg[0]]=arg[1];
 	}
 
-	MS_DELAY =			args.find("delay")	== args.end() ? 16			: stoi(args.at("delay"));
-	int numCols = 			args.find("n")		== args.end() ? 64			: stoi(args.at("n"));
+	MS_DELAY =			args.find("delay")	== args.end() ? 1			: stoi(args.at("delay"));
+	int numCols = 			args.find("n")		== args.end() ? 800			: stoi(args.at("n"));
 	vector<string> algoToUse =	args.find("algo")	== args.end() ? vector<string>()	: str_split(args.at("algo"),",");
 	string caseToUse =		args.find("case")	== args.end() ? "random"		: args.at("case");
 	int border =			args.find("border")	== args.end() ? 0			: stoi(args.at("border"));

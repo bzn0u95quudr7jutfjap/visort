@@ -30,6 +30,7 @@ run:build
 	./$(BIN) n=100 algo=insertion
 	./$(BIN) n=100 algo=selection
 	./$(BIN) n=200 algo=quick
+	./$(BIN) n=200 algo=quick-iter
 	./$(BIN) n=200 algo=merge
 	./$(BIN) n=200 algo=merge-iter
 	./$(BIN) n=200 algo=merge-iter-post

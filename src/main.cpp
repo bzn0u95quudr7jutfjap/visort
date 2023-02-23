@@ -74,17 +74,19 @@ void swap(TYPE& a, TYPE& b){
 	printSDL(a,b);
 }
 int cmpNonGraphic(TYPE& a, TYPE& b){
-	return b.h - a.h;
+	return a.h - b.h;
 }
 int cmp(TYPE& a, TYPE& b){
 	printSDL(a,b);
 	return cmpNonGraphic(a,b);
 }
 
-bool isLess(TYPE& a, TYPE&b){		return cmp(a,b)> 0; }
-bool isLessEqual(TYPE& a, TYPE&b){	return cmp(a,b)>=0; }
-bool isGreater(TYPE& a, TYPE&b){		return cmp(a,b)< 0; }
-bool isGreaterEqual(TYPE& a, TYPE&b){	return cmp(a,b)<=0; }
+bool isLess(TYPE& a, TYPE&b){		return cmp(a,b)< 0; }
+bool isLessEqual(TYPE& a, TYPE&b){	return cmp(a,b)<=0; }
+bool isGreater(TYPE& a, TYPE&b){	return cmp(a,b)> 0; }
+bool isGreaterEqual(TYPE& a, TYPE&b){	return cmp(a,b)>=0; }
+
+bool isLessNonGraphic(TYPE& a, TYPE& b){ return cmpNonGraphic(a,b)<0; }
 
 bool isOrdered(vector<TYPE>& v){
 	bool ordered = 1;
@@ -94,13 +96,13 @@ bool isOrdered(vector<TYPE>& v){
 	SDL_RenderPresent(renderer);
 	SDL_Delay(MS_DELAY);
 	for(int i = 0; i < v.size()-1; i++){
-		if(cmpNonGraphic(v[i],v[i+1])<0){
-			i = v.size()+1;
-			ordered = 0;
-		}else{
+		if(isLessNonGraphic(v[i],v[i+1])){
 			SDL_RenderFillRect(renderer,&(blocks[i+1]));
 			SDL_RenderPresent(renderer);
 			SDL_Delay(MS_DELAY);
+		}else{
+			i = v.size()+1;
+			ordered = 0;
 		}
 	}
 	return ordered;

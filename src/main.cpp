@@ -81,6 +81,11 @@ int cmp(TYPE& a, TYPE& b){
 	return cmpNonGraphic(a,b);
 }
 
+bool isLess(TYPE& a, TYPE&b){		return cmp(a,b)> 0; }
+bool isLessEqual(TYPE& a, TYPE&b){	return cmp(a,b)>=0; }
+bool isGreater(TYPE& a, TYPE&b){		return cmp(a,b)< 0; }
+bool isGreaterEqual(TYPE& a, TYPE&b){	return cmp(a,b)<=0; }
+
 bool isOrdered(vector<TYPE>& v){
 	bool ordered = 1;
 	printSDL();
@@ -148,7 +153,6 @@ int main(int argc, char ** argv){
 	for(int i = 0 ; i < numCols; i++){
 		blocks.push_back({ .x=border*(i+1)+blockWidth*i, .y=height-border-blockHeight*(i+1), .w=blockWidth, .h=blockHeight*(i+1) });
 	}
-
 
 	for(auto [k,v] : args){ cout << "( " << k << " = " << v << " ), "; }
 	cout << endl;

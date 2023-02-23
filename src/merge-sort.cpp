@@ -12,7 +12,7 @@ void _merge_sort_inplace_move(vector<TYPE>& v,int i, int j){
 void _merge_sort_inplace_merge(vector<TYPE>& v,int i, int j, int k){
 	k = k < v.size() ? k : v.size();
 	while(i<j && j<k){
-		if(cmp(v[i],v[j])<0){
+		if(isGreater(v[i],v[j])){
 			_merge_sort_inplace_move(v,i,j);
 			j++;
 			i++;
@@ -54,7 +54,7 @@ void _merge_sort_copy_merge(vector<TYPE>& v,int i,int j,int k){
 	int jdx = j;
 	int a = 0;
 	while(a < proxy.size() && idx < j && jdx < k){
-		proxy[a++]=v[ cmp(v[idx],v[jdx])>0 ? idx++ : jdx++ ];
+		proxy[a++]=v[ isLess(v[idx],v[jdx]) ? idx++ : jdx++ ];
 	}
 	while(a < proxy.size() && idx < j){
 		proxy[a++] = v[idx++];
@@ -104,7 +104,7 @@ void merge_sort_copy_iterative_post(vector<TYPE>& v){
 			int j = i+len, jdx = j;
 			int k = i+len*2	< v.size() ? i+len*2 : v.size();
 			while(idx < j && jdx < k && a < k){
-				proxy[b++] = v[cmp(v[idx],v[jdx])>0 ? idx++ : jdx++];
+				proxy[b++] = v[ isLess(v[idx],v[jdx]) ? idx++ : jdx++];
 			}
 			while(b < proxy.size() && idx < j){
 				proxy[b++] = v[idx++];

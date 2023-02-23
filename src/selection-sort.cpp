@@ -6,7 +6,7 @@ using namespace std;
 int idx_min(vector<TYPE>& v, int i, int j){
 	int idx = i;
 	for(int k = i ; k < j; k++){
-		if(cmp(v[idx],v[k]) < 0){
+		if(isGreater(v[idx],v[k])){
 			idx = k;
 		}
 	}

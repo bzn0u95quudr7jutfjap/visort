@@ -13,3 +13,8 @@ int cmpNonGraphic(TYPE&, TYPE&);
 bool isOrdered(vector<TYPE>& v);
 void swapNonGraphic(TYPE&, TYPE&);
 void swap(TYPE&, TYPE&);
+
+bool isLess(TYPE&,TYPE&);
+bool isLessEqual(TYPE&,TYPE&);
+bool isGreater(TYPE&,TYPE&);
+bool isGreaterEqual(TYPE&,TYPE&);

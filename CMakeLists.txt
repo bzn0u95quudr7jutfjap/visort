@@ -9,6 +9,7 @@ set(SOURCES
   src/insertion-sort.cpp
   src/insertion-sort-recursive.cpp
   src/main.cpp
+  src/util.cpp
   src/merge-sort.cpp
   src/quick-sort.cpp
   src/selection-sort.cpp

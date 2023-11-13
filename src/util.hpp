@@ -18,3 +18,9 @@ bool isLess(TYPE&,TYPE&);
 bool isLessEqual(TYPE&,TYPE&);
 bool isGreater(TYPE&,TYPE&);
 bool isGreaterEqual(TYPE&,TYPE&);
+
+extern int MS_DELAY;
+extern SDL_Window * window;
+extern SDL_Renderer * renderer;
+extern vector<TYPE> blocks;
+
